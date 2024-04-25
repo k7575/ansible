@@ -1,0 +1,4 @@
+---
+# handlers file for ubuntu-install
+- name: Restart netfilter-persistent
+  service: name=netfilter-persistent state=restarted

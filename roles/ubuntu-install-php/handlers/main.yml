@@ -1,0 +1,4 @@
+---
+# handlers file for ubuntu-install-php
+- name: Restart php-fpm
+  service: name=php7.2-fpm state=restarted

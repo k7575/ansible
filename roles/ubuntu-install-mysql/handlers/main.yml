@@ -1,0 +1,23 @@
+---
+# handlers file for ubuntu-install-mysql
+- name: Stop mysql
+  service:
+    name: mysql
+    state: stopped
+
+- name: Restart mysql
+  service: name=mysql state=restarted
+
+- name: Mov mysql data to home
+  shell: mv /var/lib/mysql /home/
+
+- name: Create link to mysql data
+  shell: ln -s /home/mysql /var/lib/mysql
+
+- name: Template config
+  template: src=mysqld.cnf dest=/etc/mysql/mysql.conf.d/mysqld.cnf
+
+- name: Start mysql
+  service:
+    name: mysql
+    state: started

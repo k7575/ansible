@@ -1,0 +1,7 @@
+---
+# defaults file for ubuntu-install-telegraf
+var_telegraf_hostname: "{{ ansible_hostname }}"
+var_influxdb_host: 'http://localhost:8086'
+var_influxdb_database: 'telegraf'
+var_influxdb_user: 'user'
+var_influxdb_password: 'secret'

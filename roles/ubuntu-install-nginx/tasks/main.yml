@@ -1,0 +1,30 @@
+---
+# tasks file for ubuntu-install-nginx
+- name: Install nginx-extras
+  apt:
+    name: ['nginx-extras']
+    state: present
+
+- name: Template nginx.conf
+  template: src=nginx.conf dest=/etc/nginx/nginx.conf
+  notify:
+  - Restart nginx
+
+- name: Create dir include
+  file: path=/etc/nginx/include state=directory mode=0775
+
+- name: Template nginx ssl.conf
+  template: src=ssl.conf dest=/etc/nginx/include/ssl.conf
+
+- name: Template nginx php.conf
+  template: src=php.conf dest=/etc/nginx/include/php.conf
+
+- name: Template nginx default
+  template: src=default dest=/etc/nginx/sites-available/default
+  notify:
+  - Restart nginx
+
+- name: Auto start nginx
+  service:
+    name: nginx
+    enabled: yes

@@ -1,0 +1,13 @@
+---
+# tasks file for ubuntu-install-redis
+- name: Install redis
+  apt:
+    name: ['redis']
+    state: present
+  notify:
+  - Restart redis
+
+- name: Auto start redis
+  service:
+    name: redis
+    enabled: yes

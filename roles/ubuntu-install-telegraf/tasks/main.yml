@@ -1,0 +1,35 @@
+---
+# tasks file for ubuntu-install-telegraf
+- name: Error != Ubuntu
+  meta: end_host
+  when:
+  - ansible_distribution != 'Ubuntu'
+
+- name: Add APT signing key
+  apt_key:
+    url: https://repos.influxdata.com/influxdb.key
+    state: present
+
+- name: Add APT repositories
+  apt_repository:
+    repo: deb https://repos.influxdata.com/ubuntu {{ ansible_distribution_release }} stable
+    state: present
+    filename: influxdb.list
+
+- name: Install telegraf
+  apt:
+    name: telegraf
+    state: present
+    update_cache: yes
+
+- name: Template telegraf.conf
+  template:
+    src=telegraf.conf.j2
+    dest=/etc/telegraf/telegraf.conf
+  notify:
+  - Restart telegraf
+
+- name: Enable auto start telegraf
+  service:
+    name: telegraf
+    enabled: yes

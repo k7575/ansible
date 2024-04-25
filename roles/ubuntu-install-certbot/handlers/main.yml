@@ -1,0 +1,4 @@
+---
+# handlers file for ubuntu-install-certbot
+- name: Template config
+  template: src=rfc2136.ini dest=/etc/letsencrypt/rfc2136.ini

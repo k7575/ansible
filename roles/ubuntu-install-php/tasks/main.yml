@@ -1,0 +1,17 @@
+---
+# tasks file for ubuntu-install-php
+- name: Install php php-fpm
+  apt:
+    name: ['php-cli', 'php-fpm', 'php-mbstring', 'php-mysql', 'php-gd', 'php-curl', 'php-redis', 'php-memcache', 'php-geoip']
+    state: present
+
+- name: Config php-fpm listen
+  lineinfile: path=/etc/php/7.2/fpm/pool.d/www.conf regexp='listen = /run/php/php7.2-fpm.sock' line='listen = 127.0.0.1:9000'
+  notify:
+  - Restart php-fpm
+
+- name: Auto start php-fpm
+  service:
+    name: php7.2-fpm
+    enabled: yes
+

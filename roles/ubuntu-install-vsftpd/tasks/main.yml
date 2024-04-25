@@ -1,0 +1,15 @@
+---
+# tasks file for ubuntu-install-vsftpd
+- name: Install vsftpd
+  apt:
+    name: ['vsftpd']
+    state: present
+  notify:
+  - Template config
+  - Restart vsftpd
+  - Add nf_conntrack_ftp
+
+- name: Auto start vsftpd
+  service:
+    name: vsftpd
+    enabled: yes

@@ -1,0 +1,8 @@
+---
+# tasks file for ubuntu-install-certbot
+- name: Install certbot
+  apt:
+    name: ['certbot', 'python3-certbot-dns-rfc2136']
+    state: present
+  notify:
+  - Template config

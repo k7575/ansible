@@ -1,0 +1,37 @@
+---
+# tasks file for ubuntu-install
+- name: Update apt cache
+  apt: update_cache=yes
+
+- name: Upgrade packages
+  apt: upgrade=dist
+
+- name: Install add-apt-repository
+  apt:
+    name: ['software-properties-common']
+    state: present
+
+- name: Add repo universe
+  shell: add-apt-repository universe
+
+- name: Install packages
+  apt:
+    name: ['git', 'atop',  'mc', 'tmux', 'rsync', 'curl', 'wget', 'tcpdump', 'sysstat', 'strace', 'hping3', 'aria2', 'dnsutils', 'mtr', 'netfilter-persistent', 'iptables-persistent', 'apache2-utils']
+    state: present
+
+- name: Config iptables v4
+  template: src=rules.v4 dest=/etc/iptables/rules.v4
+  notify:
+  - Restart netfilter-persistent
+
+- name: Config iptables v6
+  template: src=rules.v6 dest=/etc/iptables/rules.v6
+  notify:
+  - Restart netfilter-persistent
+
+- name: Enable sysstat
+  lineinfile: path=/etc/default/sysstat regexp='ENABLED="false"' line='ENABLED="true"'
+
+- name: Reboot host
+  reboot:
+    reboot_timeout: 600

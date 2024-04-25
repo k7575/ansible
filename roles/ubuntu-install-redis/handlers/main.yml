@@ -1,0 +1,4 @@
+---
+# handlers file for ubuntu-install-redis
+- name: Restart redis
+  service: name=redis state=restarted

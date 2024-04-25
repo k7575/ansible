@@ -1,0 +1,4 @@
+---
+# handlers file for ubuntu-install-nginx
+- name: Restart nginx
+  service: name=nginx state=restarted

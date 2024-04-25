@@ -1,0 +1,15 @@
+---
+# handlers file for ubuntu-install-vsftpd
+
+- name: Template config
+  template: src=vsftpd.conf dest=/etc/vsftpd.conf
+
+- name: Restart vsftpd
+  service: name=vsftpd state=restarted
+
+- name: Add nf_conntrack_ftp
+  lineinfile:
+    path: /etc/modules
+    line: 'nf_conntrack_ftp'
+    create: yes
+
